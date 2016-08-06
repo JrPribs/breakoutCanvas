@@ -1,20 +1,21 @@
 var gulp = require('gulp');
+var babel = require('gulp-babel');
 var plumber = require('gulp-plumber');
+var print = require('gulp-print');
 var sass = require('gulp-sass');
 var webserver = require('gulp-webserver');
-var opn = require('opn');
-var responsive = require('gulp-responsive');
-var babel = require('gulp-babel');
 
 var sourcePaths = {
-    styles: ['styles/*.scss', 'resume/styles/*.scss', 'game/styles/*.scss'],
-	js: ['**/js/*.js'],
-    views: ['**/*.html']
+    styles: ['src/styles/*.scss'],
+    js: ['src/js/*.js'],
+    views: ['src/*.html']
 };
 
 var distPaths = {
-    styles: './',
-    js: './'
+    main: 'dist/',
+    styles: 'dist/styles/',
+    js: 'dist/js/',
+    lib: 'dist/lib',
 };
 
 var server = {
@@ -23,44 +24,55 @@ var server = {
 };
 
 gulp.task('sass', function() {
-    gulp.src(sourcePaths.styles, {base: './src/'})
+    gulp.src(sourcePaths.styles, {base: 'src'})
         .pipe(plumber())
         .pipe(sass())
-        .pipe(gulp.dest(distPaths.styles));
+        .pipe(gulp.dest(distPaths.main));
 });
 
 gulp.task('babel', function() {
-    return gulp.src(sourcePaths.js)
+    return gulp.src(sourcePaths.js, {base: 'src'})
+        .pipe(print())
         .pipe(plumber())
-        .pipe(babel())
-        .pipe(gulp.dest(sourcePaths.js));
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(gulp.dest(distPaths.main));
+});
+
+gulp.task('libs', function(){
+    return gulp.src([
+        'node_modules/systemjs/dist/system.js',
+        'node_modules/babel-polyfill/dist/polyfill.js'])
+        .pipe(print())
+        .pipe(gulp.dest(distPaths.lib));
 });
 
 gulp.task('webserver', function() {
-    gulp.src('.')
+    gulp.src('dist/')
         .pipe(webserver({
             host: server.host,
             port: server.port,
             livereload: true,
-            directoryListing: false
+            directoryListing: false,
+            open: true
         }));
 });
 
-gulp.task('openbrowser', function() {
-    opn('http://' + server.host + ':' + server.port);
+gulp.task('build', ['sass', 'babel', 'libs'], function() {
+    return gulp.src(['src/*.html'])
+        .pipe(print())
+        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('watch', function() {
     gulp.watch(sourcePaths.styles, ['sass']);
-	gulp.watch(sourcePaths.js);
+    gulp.watch(sourcePaths.js, ['babel']);
     gulp.watch(sourcePaths.views);
 });
 
-gulp.task('build', ['sass']);
-
 gulp.task('default', [
-   'build',
+    'build',
     'webserver',
-    'watch',
-   'openbrowser'
+    'watch'
 ]);

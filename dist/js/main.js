@@ -1,4 +1,6 @@
-(() => {
+'use strict';
+
+(function () {
     'use strict';
 
     var k = new Kibo();
@@ -20,19 +22,19 @@
     };
     gameState.wallHeight = canvas.height / 4;
     gameState.brickHeight = gameState.wallHeight / gameState.rows;
-    gameState.brickWidth = (canvas.width / gameState.cols);
-    gameState.bricks =  _.fill(Array(gameState.rows), _.fill(Array(gameState.cols), {}));
+    gameState.brickWidth = canvas.width / gameState.cols;
+    gameState.bricks = _.fill(Array(gameState.rows), _.fill(Array(gameState.cols), {}));
 
-    gameState.togglePause = () => {
+    gameState.togglePause = function () {
         gameState.paused = !gameState.paused;
         if (gameState.paused === false) {
-            window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(function () {
                 main();
             });
         }
     };
 
-    gameState.pause = function() {
+    gameState.pause = function () {
         ctx.font = '50px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillStyle = '#000';
@@ -46,7 +48,7 @@
         ctx.font = "15px sans-serif";
         ctx.fillStyle = '#000';
         ctx.textAlign = 'right';
-        ctx.fillText(`Lives: ${gameState.lives}`, canvas.width, canvas.height - 1);
+        ctx.fillText('Lives: ' + gameState.lives, canvas.width, canvas.height - 1);
     }
 
     function drawScore() {
@@ -57,16 +59,16 @@
     }
 
     function buildBricks() {
-        return _.map(gameState.bricks, function(rows, y) {
-            return _.map(rows, function(brick, x) {
+        return _.map(gameState.bricks, function (rows, y) {
+            return _.map(rows, function (brick, x) {
                 return new Brick(x, y);
             });
         });
     }
 
     function checkHit() {
-         _.forEach(gameState.bricks, function(row, y) {
-            _.forEach(row, function(brick, x) {
+        _.forEach(gameState.bricks, function (row, y) {
+            _.forEach(row, function (brick, x) {
                 var hit = brick.isHit();
                 if (hit) {
                     brick.visible = false;
@@ -78,8 +80,8 @@
     }
 
     function drawBricks() {
-        _.forEach(gameState.bricks, function(row, y) {
-            _.forEach(row, function(brick, x) {
+        _.forEach(gameState.bricks, function (row, y) {
+            _.forEach(row, function (brick, x) {
                 if (brick.visible) {
                     brick.draw();
                 }
@@ -91,7 +93,7 @@
     * Brick - Brick - Brick - Brick - Brick - Brick **
     *************************************************/
 
-    var Brick = function(x, y) {
+    var Brick = function Brick(x, y) {
         _.assign(this, {
             x: x * gameState.brickWidth,
             y: y * gameState.brickHeight,
@@ -103,7 +105,7 @@
         });
     };
 
-    Brick.prototype.draw = function() {
+    Brick.prototype.draw = function () {
         ctx.lineWidth = 1;
         ctx.beginPath();
         this.setStyles();
@@ -113,7 +115,7 @@
         ctx.closePath();
     };
 
-    Brick.prototype.isHit = function() {
+    Brick.prototype.isHit = function () {
         if (this.visible) {
             var hitX = _.inRange(gameState.ball.addRadius(gameState.ball.x), this.x, this.x + gameState.brickWidth) || _.inRange(gameState.ball.minusRadius(gameState.ball.x), this.x, this.x + gameState.brickWidth);
             var hitY = _.inRange(gameState.ball.addRadius(gameState.ball.y), this.y, this.y + gameState.brickHeight) || _.inRange(gameState.ball.minusRadius(gameState.ball.y), this.y, this.y + gameState.brickHeight);
@@ -123,7 +125,7 @@
         }
     };
 
-    Brick.prototype.setStyles = function() {
+    Brick.prototype.setStyles = function () {
         ctx.strokeStyle = this.colors.stroke;
         ctx.fillStyle = this.colors.fill;
     };
@@ -132,7 +134,7 @@
     * Paddle - Paddle - Paddle - Paddle - Paddle ****
     *************************************************/
 
-    var Paddle = function() {
+    var Paddle = function Paddle() {
         this.width = gameState.width / 10;
         this.height = 10;
         this.speed = 13;
@@ -140,7 +142,7 @@
         this.y = gameState.height - this.height;
     };
 
-    Paddle.prototype.draw = function() {
+    Paddle.prototype.draw = function () {
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.strokeStyle = '#000';
@@ -150,15 +152,15 @@
         ctx.closePath();
     };
 
-    Paddle.prototype.move = function() {
+    Paddle.prototype.move = function () {
         if (this.dir === 'left' && this.x > 0) {
             this.x -= this.speed;
-        } else if (this.dir === 'right' && this.x + this.width <= canvas.width){
+        } else if (this.dir === 'right' && this.x + this.width <= canvas.width) {
             this.x += this.speed;
         }
     };
 
-    Paddle.prototype.isHit = function() {
+    Paddle.prototype.isHit = function () {
         var hitX = _.inRange(gameState.ball.addRadius(gameState.ball.x), this.x, this.x + this.width + 1) || _.inRange(gameState.ball.minusRadius(gameState.ball.x), this.x, this.x + this.width + 1);
         var hitY = _.inRange(gameState.ball.addRadius(gameState.ball.y), this.y, this.y + this.height + 1);
         return hitY && hitX;
@@ -167,21 +169,21 @@
     /************************************************
     * Ball - Ball - Ball - Ball - Ball - Ball- Ball *
     *************************************************/
-    var Ball = function() {
+    var Ball = function Ball() {
         this.radius = 10;
         this.vel = {
             x: 2,
             y: -2
         };
-        this.x = canvas.width/ 2;
-        this.y = canvas.height -  25;
+        this.x = canvas.width / 2;
+        this.y = canvas.height - 25;
         this.colors = {
             fill: 'yellow',
             stroke: '#000'
         };
     };
 
-    Ball.prototype.draw = function(x, y) {
+    Ball.prototype.draw = function (x, y) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.strokeStyle = this.colors.stroke;
@@ -191,7 +193,7 @@
         ctx.closePath();
     };
 
-    Ball.prototype.move = function() {
+    Ball.prototype.move = function () {
         this.x += this.vel.x;
         this.y += this.vel.y;
         var hitRight = this.addRadius(this.x) > canvas.width;
@@ -225,27 +227,27 @@
         this.draw();
     };
 
-    Ball.prototype.addRadius = function(val) {
+    Ball.prototype.addRadius = function (val) {
         return val + this.radius;
     };
 
-    Ball.prototype.minusRadius = function(val) {
+    Ball.prototype.minusRadius = function (val) {
         return val - this.radius;
     };
 
     // keyboard controls via kibo.js
     var arrows = ['left', 'right'];
-    k.down(arrows, function() {
+    k.down(arrows, function () {
         gameState.paddle.dir = k.lastKey();
         gameState.paddle.move();
     });
 
-    k.down('enter', function() {
+    k.down('enter', function () {
         gameState.isNew = false;
         main();
     });
 
-    k.down('space', function() {
+    k.down('space', function () {
         gameState.togglePause();
     });
 
@@ -278,9 +280,9 @@
         } else if (gameState.paused) {
             gameState.pause();
         } else {
-            window.requestAnimationFrame(function() {
+            window.requestAnimationFrame(function () {
                 main();
             });
         }
     }
- })();
+})();
