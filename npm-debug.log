@@ -1,0 +1,423 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/jpribesh/.nvm/versions/node/v4.4.5/bin/node',
+1 verbose cli   '/Users/jpribesh/.nvm/versions/node/v4.4.5/bin/npm',
+1 verbose cli   'install' ]
+2 info using npm@2.15.5
+3 info using node@v4.4.5
+4 verbose readDependencies loading dependencies from /Users/jpribesh/code/personal/breakoutCanvas/package.json
+5 warn package.json Dependency 'babel-preset-es2015' exists in both dependencies and devDependencies, using 'babel-preset-es2015@^6.6.0' from dependencies
+6 warn package.json Dependency 'gulp-babel' exists in both dependencies and devDependencies, using 'gulp-babel@^6.1.2' from dependencies
+7 warn package.json Dependency 'gulp-sass' exists in both dependencies and devDependencies, using 'gulp-sass@^2.3.1' from dependencies
+8 verbose install where, deps [ '/Users/jpribesh/code/personal/breakoutCanvas',
+8 verbose install   [ 'babel-preset-es2015',
+8 verbose install     'gulp',
+8 verbose install     'gulp-babel',
+8 verbose install     'gulp-plumber',
+8 verbose install     'gulp-rename',
+8 verbose install     'gulp-sass',
+8 verbose install     'gulp-uglify',
+8 verbose install     'gulp-webserver',
+8 verbose install     'opn',
+8 verbose install     'babel-core',
+8 verbose install     'babel-register' ] ]
+9 verbose install where, peers [ '/Users/jpribesh/code/personal/breakoutCanvas', [] ]
+10 verbose installManyTop reading for lifecycle /Users/jpribesh/code/personal/breakoutCanvas/package.json
+11 info preinstall breakoutCanvas@1.0.0
+12 verbose readDependencies loading dependencies from /Users/jpribesh/code/personal/breakoutCanvas/package.json
+13 silly cache add args [ 'babel-preset-es2015@^6.6.0', null ]
+14 verbose cache add spec babel-preset-es2015@^6.6.0
+15 silly cache add args [ 'gulp@^3.9.1', null ]
+16 verbose cache add spec gulp@^3.9.1
+17 silly cache add parsed spec Result {
+17 silly cache add   raw: 'babel-preset-es2015@^6.6.0',
+17 silly cache add   scope: null,
+17 silly cache add   name: 'babel-preset-es2015',
+17 silly cache add   rawSpec: '^6.6.0',
+17 silly cache add   spec: '>=6.6.0 <7.0.0',
+17 silly cache add   type: 'range' }
+18 silly addNamed babel-preset-es2015@>=6.6.0 <7.0.0
+19 verbose addNamed ">=6.6.0 <7.0.0" is a valid semver range for babel-preset-es2015
+20 silly addNameRange { name: 'babel-preset-es2015',
+20 silly addNameRange   range: '>=6.6.0 <7.0.0',
+20 silly addNameRange   hasData: false }
+21 silly mapToRegistry name babel-preset-es2015
+22 silly mapToRegistry using default registry
+23 silly mapToRegistry registry http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/
+24 silly mapToRegistry data Result {
+24 silly mapToRegistry   raw: 'babel-preset-es2015',
+24 silly mapToRegistry   scope: null,
+24 silly mapToRegistry   name: 'babel-preset-es2015',
+24 silly mapToRegistry   rawSpec: '',
+24 silly mapToRegistry   spec: 'latest',
+24 silly mapToRegistry   type: 'tag' }
+25 silly mapToRegistry uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-preset-es2015
+26 verbose addNameRange registry:http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-preset-es2015 not in flight; fetching
+27 silly cache add parsed spec Result {
+27 silly cache add   raw: 'gulp@^3.9.1',
+27 silly cache add   scope: null,
+27 silly cache add   name: 'gulp',
+27 silly cache add   rawSpec: '^3.9.1',
+27 silly cache add   spec: '>=3.9.1 <4.0.0',
+27 silly cache add   type: 'range' }
+28 silly addNamed gulp@>=3.9.1 <4.0.0
+29 verbose addNamed ">=3.9.1 <4.0.0" is a valid semver range for gulp
+30 silly addNameRange { name: 'gulp', range: '>=3.9.1 <4.0.0', hasData: false }
+31 silly mapToRegistry name gulp
+32 silly mapToRegistry using default registry
+33 silly mapToRegistry registry http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/
+34 silly mapToRegistry data Result {
+34 silly mapToRegistry   raw: 'gulp',
+34 silly mapToRegistry   scope: null,
+34 silly mapToRegistry   name: 'gulp',
+34 silly mapToRegistry   rawSpec: '',
+34 silly mapToRegistry   spec: 'latest',
+34 silly mapToRegistry   type: 'tag' }
+35 silly mapToRegistry uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp
+36 verbose addNameRange registry:http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp not in flight; fetching
+37 silly cache add args [ 'gulp-babel@^6.1.2', null ]
+38 verbose cache add spec gulp-babel@^6.1.2
+39 silly cache add parsed spec Result {
+39 silly cache add   raw: 'gulp-babel@^6.1.2',
+39 silly cache add   scope: null,
+39 silly cache add   name: 'gulp-babel',
+39 silly cache add   rawSpec: '^6.1.2',
+39 silly cache add   spec: '>=6.1.2 <7.0.0',
+39 silly cache add   type: 'range' }
+40 silly addNamed gulp-babel@>=6.1.2 <7.0.0
+41 verbose addNamed ">=6.1.2 <7.0.0" is a valid semver range for gulp-babel
+42 silly addNameRange { name: 'gulp-babel', range: '>=6.1.2 <7.0.0', hasData: false }
+43 silly mapToRegistry name gulp-babel
+44 silly mapToRegistry using default registry
+45 silly mapToRegistry registry http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/
+46 silly mapToRegistry data Result {
+46 silly mapToRegistry   raw: 'gulp-babel',
+46 silly mapToRegistry   scope: null,
+46 silly mapToRegistry   name: 'gulp-babel',
+46 silly mapToRegistry   rawSpec: '',
+46 silly mapToRegistry   spec: 'latest',
+46 silly mapToRegistry   type: 'tag' }
+47 silly mapToRegistry uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-babel
+48 verbose addNameRange registry:http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-babel not in flight; fetching
+49 silly cache add args [ 'gulp-plumber@^1.1.0', null ]
+50 verbose cache add spec gulp-plumber@^1.1.0
+51 silly cache add parsed spec Result {
+51 silly cache add   raw: 'gulp-plumber@^1.1.0',
+51 silly cache add   scope: null,
+51 silly cache add   name: 'gulp-plumber',
+51 silly cache add   rawSpec: '^1.1.0',
+51 silly cache add   spec: '>=1.1.0 <2.0.0',
+51 silly cache add   type: 'range' }
+52 silly addNamed gulp-plumber@>=1.1.0 <2.0.0
+53 verbose addNamed ">=1.1.0 <2.0.0" is a valid semver range for gulp-plumber
+54 silly addNameRange { name: 'gulp-plumber', range: '>=1.1.0 <2.0.0', hasData: false }
+55 silly mapToRegistry name gulp-plumber
+56 silly mapToRegistry using default registry
+57 silly mapToRegistry registry http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/
+58 silly mapToRegistry data Result {
+58 silly mapToRegistry   raw: 'gulp-plumber',
+58 silly mapToRegistry   scope: null,
+58 silly mapToRegistry   name: 'gulp-plumber',
+58 silly mapToRegistry   rawSpec: '',
+58 silly mapToRegistry   spec: 'latest',
+58 silly mapToRegistry   type: 'tag' }
+59 silly mapToRegistry uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-plumber
+60 verbose addNameRange registry:http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-plumber not in flight; fetching
+61 silly cache add args [ 'gulp-rename@^1.2.2', null ]
+62 verbose cache add spec gulp-rename@^1.2.2
+63 silly cache add parsed spec Result {
+63 silly cache add   raw: 'gulp-rename@^1.2.2',
+63 silly cache add   scope: null,
+63 silly cache add   name: 'gulp-rename',
+63 silly cache add   rawSpec: '^1.2.2',
+63 silly cache add   spec: '>=1.2.2 <2.0.0',
+63 silly cache add   type: 'range' }
+64 silly addNamed gulp-rename@>=1.2.2 <2.0.0
+65 verbose addNamed ">=1.2.2 <2.0.0" is a valid semver range for gulp-rename
+66 silly addNameRange { name: 'gulp-rename', range: '>=1.2.2 <2.0.0', hasData: false }
+67 silly mapToRegistry name gulp-rename
+68 silly mapToRegistry using default registry
+69 silly mapToRegistry registry http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/
+70 silly mapToRegistry data Result {
+70 silly mapToRegistry   raw: 'gulp-rename',
+70 silly mapToRegistry   scope: null,
+70 silly mapToRegistry   name: 'gulp-rename',
+70 silly mapToRegistry   rawSpec: '',
+70 silly mapToRegistry   spec: 'latest',
+70 silly mapToRegistry   type: 'tag' }
+71 silly mapToRegistry uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-rename
+72 verbose addNameRange registry:http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-rename not in flight; fetching
+73 silly cache add args [ 'gulp-sass@^2.3.1', null ]
+74 verbose cache add spec gulp-sass@^2.3.1
+75 silly cache add parsed spec Result {
+75 silly cache add   raw: 'gulp-sass@^2.3.1',
+75 silly cache add   scope: null,
+75 silly cache add   name: 'gulp-sass',
+75 silly cache add   rawSpec: '^2.3.1',
+75 silly cache add   spec: '>=2.3.1 <3.0.0',
+75 silly cache add   type: 'range' }
+76 silly addNamed gulp-sass@>=2.3.1 <3.0.0
+77 verbose addNamed ">=2.3.1 <3.0.0" is a valid semver range for gulp-sass
+78 silly addNameRange { name: 'gulp-sass', range: '>=2.3.1 <3.0.0', hasData: false }
+79 silly mapToRegistry name gulp-sass
+80 silly mapToRegistry using default registry
+81 silly mapToRegistry registry http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/
+82 silly mapToRegistry data Result {
+82 silly mapToRegistry   raw: 'gulp-sass',
+82 silly mapToRegistry   scope: null,
+82 silly mapToRegistry   name: 'gulp-sass',
+82 silly mapToRegistry   rawSpec: '',
+82 silly mapToRegistry   spec: 'latest',
+82 silly mapToRegistry   type: 'tag' }
+83 silly mapToRegistry uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-sass
+84 verbose addNameRange registry:http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-sass not in flight; fetching
+85 silly cache add args [ 'gulp-uglify@^1.5.3', null ]
+86 verbose cache add spec gulp-uglify@^1.5.3
+87 silly cache add parsed spec Result {
+87 silly cache add   raw: 'gulp-uglify@^1.5.3',
+87 silly cache add   scope: null,
+87 silly cache add   name: 'gulp-uglify',
+87 silly cache add   rawSpec: '^1.5.3',
+87 silly cache add   spec: '>=1.5.3 <2.0.0',
+87 silly cache add   type: 'range' }
+88 silly addNamed gulp-uglify@>=1.5.3 <2.0.0
+89 verbose addNamed ">=1.5.3 <2.0.0" is a valid semver range for gulp-uglify
+90 silly addNameRange { name: 'gulp-uglify', range: '>=1.5.3 <2.0.0', hasData: false }
+91 silly mapToRegistry name gulp-uglify
+92 silly mapToRegistry using default registry
+93 silly mapToRegistry registry http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/
+94 silly mapToRegistry data Result {
+94 silly mapToRegistry   raw: 'gulp-uglify',
+94 silly mapToRegistry   scope: null,
+94 silly mapToRegistry   name: 'gulp-uglify',
+94 silly mapToRegistry   rawSpec: '',
+94 silly mapToRegistry   spec: 'latest',
+94 silly mapToRegistry   type: 'tag' }
+95 silly mapToRegistry uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-uglify
+96 verbose addNameRange registry:http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-uglify not in flight; fetching
+97 silly cache add args [ 'gulp-webserver@^0.9.1', null ]
+98 verbose cache add spec gulp-webserver@^0.9.1
+99 silly cache add parsed spec Result {
+99 silly cache add   raw: 'gulp-webserver@^0.9.1',
+99 silly cache add   scope: null,
+99 silly cache add   name: 'gulp-webserver',
+99 silly cache add   rawSpec: '^0.9.1',
+99 silly cache add   spec: '>=0.9.1 <0.10.0',
+99 silly cache add   type: 'range' }
+100 silly addNamed gulp-webserver@>=0.9.1 <0.10.0
+101 verbose addNamed ">=0.9.1 <0.10.0" is a valid semver range for gulp-webserver
+102 silly addNameRange { name: 'gulp-webserver',
+102 silly addNameRange   range: '>=0.9.1 <0.10.0',
+102 silly addNameRange   hasData: false }
+103 silly mapToRegistry name gulp-webserver
+104 silly mapToRegistry using default registry
+105 silly mapToRegistry registry http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/
+106 silly mapToRegistry data Result {
+106 silly mapToRegistry   raw: 'gulp-webserver',
+106 silly mapToRegistry   scope: null,
+106 silly mapToRegistry   name: 'gulp-webserver',
+106 silly mapToRegistry   rawSpec: '',
+106 silly mapToRegistry   spec: 'latest',
+106 silly mapToRegistry   type: 'tag' }
+107 silly mapToRegistry uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-webserver
+108 verbose addNameRange registry:http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-webserver not in flight; fetching
+109 silly cache add args [ 'opn@^4.0.1', null ]
+110 verbose cache add spec opn@^4.0.1
+111 silly cache add parsed spec Result {
+111 silly cache add   raw: 'opn@^4.0.1',
+111 silly cache add   scope: null,
+111 silly cache add   name: 'opn',
+111 silly cache add   rawSpec: '^4.0.1',
+111 silly cache add   spec: '>=4.0.1 <5.0.0',
+111 silly cache add   type: 'range' }
+112 silly addNamed opn@>=4.0.1 <5.0.0
+113 verbose addNamed ">=4.0.1 <5.0.0" is a valid semver range for opn
+114 silly addNameRange { name: 'opn', range: '>=4.0.1 <5.0.0', hasData: false }
+115 silly mapToRegistry name opn
+116 silly mapToRegistry using default registry
+117 silly mapToRegistry registry http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/
+118 silly mapToRegistry data Result {
+118 silly mapToRegistry   raw: 'opn',
+118 silly mapToRegistry   scope: null,
+118 silly mapToRegistry   name: 'opn',
+118 silly mapToRegistry   rawSpec: '',
+118 silly mapToRegistry   spec: 'latest',
+118 silly mapToRegistry   type: 'tag' }
+119 silly mapToRegistry uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/opn
+120 verbose addNameRange registry:http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/opn not in flight; fetching
+121 silly cache add args [ 'babel-core@^6.11.4', null ]
+122 verbose cache add spec babel-core@^6.11.4
+123 silly cache add parsed spec Result {
+123 silly cache add   raw: 'babel-core@^6.11.4',
+123 silly cache add   scope: null,
+123 silly cache add   name: 'babel-core',
+123 silly cache add   rawSpec: '^6.11.4',
+123 silly cache add   spec: '>=6.11.4 <7.0.0',
+123 silly cache add   type: 'range' }
+124 silly addNamed babel-core@>=6.11.4 <7.0.0
+125 verbose addNamed ">=6.11.4 <7.0.0" is a valid semver range for babel-core
+126 silly addNameRange { name: 'babel-core', range: '>=6.11.4 <7.0.0', hasData: false }
+127 silly mapToRegistry name babel-core
+128 silly mapToRegistry using default registry
+129 silly mapToRegistry registry http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/
+130 silly mapToRegistry data Result {
+130 silly mapToRegistry   raw: 'babel-core',
+130 silly mapToRegistry   scope: null,
+130 silly mapToRegistry   name: 'babel-core',
+130 silly mapToRegistry   rawSpec: '',
+130 silly mapToRegistry   spec: 'latest',
+130 silly mapToRegistry   type: 'tag' }
+131 silly mapToRegistry uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-core
+132 verbose addNameRange registry:http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-core not in flight; fetching
+133 silly cache add args [ 'babel-register@^6.11.6', null ]
+134 verbose cache add spec babel-register@^6.11.6
+135 silly cache add parsed spec Result {
+135 silly cache add   raw: 'babel-register@^6.11.6',
+135 silly cache add   scope: null,
+135 silly cache add   name: 'babel-register',
+135 silly cache add   rawSpec: '^6.11.6',
+135 silly cache add   spec: '>=6.11.6 <7.0.0',
+135 silly cache add   type: 'range' }
+136 silly addNamed babel-register@>=6.11.6 <7.0.0
+137 verbose addNamed ">=6.11.6 <7.0.0" is a valid semver range for babel-register
+138 silly addNameRange { name: 'babel-register',
+138 silly addNameRange   range: '>=6.11.6 <7.0.0',
+138 silly addNameRange   hasData: false }
+139 silly mapToRegistry name babel-register
+140 silly mapToRegistry using default registry
+141 silly mapToRegistry registry http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/
+142 silly mapToRegistry data Result {
+142 silly mapToRegistry   raw: 'babel-register',
+142 silly mapToRegistry   scope: null,
+142 silly mapToRegistry   name: 'babel-register',
+142 silly mapToRegistry   rawSpec: '',
+142 silly mapToRegistry   spec: 'latest',
+142 silly mapToRegistry   type: 'tag' }
+143 silly mapToRegistry uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-register
+144 verbose addNameRange registry:http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-register not in flight; fetching
+145 verbose request uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-preset-es2015
+146 verbose request no auth needed
+147 info attempt registry request try #1 at 3:14:57 AM
+148 verbose request id 365dc5968a2ac738
+149 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-preset-es2015
+150 verbose request uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp
+151 verbose request no auth needed
+152 info attempt registry request try #1 at 3:14:57 AM
+153 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp
+154 verbose request uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-babel
+155 verbose request no auth needed
+156 info attempt registry request try #1 at 3:14:57 AM
+157 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-babel
+158 verbose request uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-plumber
+159 verbose request no auth needed
+160 info attempt registry request try #1 at 3:14:57 AM
+161 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-plumber
+162 verbose request uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-rename
+163 verbose request no auth needed
+164 info attempt registry request try #1 at 3:14:57 AM
+165 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-rename
+166 verbose request uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-sass
+167 verbose request no auth needed
+168 info attempt registry request try #1 at 3:14:57 AM
+169 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-sass
+170 verbose request uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-uglify
+171 verbose request no auth needed
+172 info attempt registry request try #1 at 3:14:57 AM
+173 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-uglify
+174 verbose request uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-webserver
+175 verbose request no auth needed
+176 info attempt registry request try #1 at 3:14:57 AM
+177 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-webserver
+178 verbose request uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/opn
+179 verbose request no auth needed
+180 info attempt registry request try #1 at 3:14:57 AM
+181 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/opn
+182 verbose request uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-core
+183 verbose request no auth needed
+184 info attempt registry request try #1 at 3:14:57 AM
+185 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-core
+186 verbose request uri http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-register
+187 verbose request no auth needed
+188 info attempt registry request try #1 at 3:14:57 AM
+189 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-register
+190 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+191 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+192 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+193 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+194 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+195 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+196 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+197 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+198 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+199 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+200 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+201 info attempt registry request try #2 at 3:16:23 AM
+202 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp
+203 info attempt registry request try #2 at 3:16:23 AM
+204 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-babel
+205 info attempt registry request try #2 at 3:16:23 AM
+206 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-preset-es2015
+207 info attempt registry request try #2 at 3:16:23 AM
+208 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-plumber
+209 info attempt registry request try #2 at 3:16:23 AM
+210 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-webserver
+211 info attempt registry request try #2 at 3:16:23 AM
+212 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-uglify
+213 info attempt registry request try #2 at 3:16:23 AM
+214 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-sass
+215 info attempt registry request try #2 at 3:16:23 AM
+216 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-rename
+217 info attempt registry request try #2 at 3:16:23 AM
+218 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-register
+219 info attempt registry request try #2 at 3:16:23 AM
+220 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-core
+221 info attempt registry request try #2 at 3:16:23 AM
+222 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/opn
+223 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+224 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+225 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+226 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+227 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+228 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+229 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+230 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+231 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+232 info retry will retry, error on last attempt: Error: connect ENETUNREACH 10.84.114.25:80
+233 info retry will retry, error on last attempt: Error: connect ETIMEDOUT 10.84.114.25:80
+234 info attempt registry request try #3 at 3:18:39 AM
+235 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp
+236 info attempt registry request try #3 at 3:18:39 AM
+237 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-babel
+238 info attempt registry request try #3 at 3:18:39 AM
+239 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-preset-es2015
+240 info attempt registry request try #3 at 3:18:39 AM
+241 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-plumber
+242 info attempt registry request try #3 at 3:18:39 AM
+243 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-rename
+244 info attempt registry request try #3 at 3:18:39 AM
+245 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-sass
+246 info attempt registry request try #3 at 3:18:39 AM
+247 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-uglify
+248 info attempt registry request try #3 at 3:18:39 AM
+249 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/gulp-webserver
+250 info attempt registry request try #3 at 3:18:39 AM
+251 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/opn
+252 info attempt registry request try #3 at 3:18:39 AM
+253 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-core
+254 info attempt registry request try #3 at 3:18:39 AM
+255 http request GET http://artifactory.tools.gannettdigital.com/artifactory/api/npm/presto-next-npm/babel-register
+256 verbose stack Error: connect ENETUNREACH 10.84.114.25:80
+256 verbose stack     at Object.exports._errnoException (util.js:870:11)
+256 verbose stack     at exports._exceptionWithHostPort (util.js:893:20)
+256 verbose stack     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1061:14)
+257 verbose cwd /Users/jpribesh/code/personal/breakoutCanvas
+258 error Darwin 15.6.0
+259 error argv "/Users/jpribesh/.nvm/versions/node/v4.4.5/bin/node" "/Users/jpribesh/.nvm/versions/node/v4.4.5/bin/npm" "install"
+260 error node v4.4.5
+261 error npm  v2.15.5
+262 error code ENETUNREACH
+263 error errno ENETUNREACH
+264 error syscall connect
+265 error connect ENETUNREACH 10.84.114.25:80
+266 error If you need help, you may report this error at:
+266 error     <https://github.com/npm/npm/issues>
+267 verbose exit [ 1, true ]
