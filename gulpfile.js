@@ -54,13 +54,12 @@ gulp.task('webserver', function() {
             host: server.host,
             port: server.port,
             livereload: true,
-            directoryListing: false,
-            open: true
+            directoryListing: false
         }));
 });
 
 gulp.task('build', ['sass', 'babel', 'libs'], function() {
-    return gulp.src(['src/*.html'])
+    gulp.src(['src/*.html'])
         .pipe(print())
         .pipe(gulp.dest('dist'));
 });
