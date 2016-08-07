@@ -24,16 +24,16 @@ var server = {
 };
 
 gulp.task('sass', function() {
-    gulp.src(sourcePaths.styles, {base: 'src'})
+    gulp.src(sourcePaths.styles, {base: 'src/'})
         .pipe(plumber())
         .pipe(sass())
         .pipe(gulp.dest(distPaths.main));
 });
 
 gulp.task('babel', function() {
-    return gulp.src(sourcePaths.js, {base: 'src'})
-        .pipe(print())
+    return gulp.src(sourcePaths.js, {base: 'src/'})
         .pipe(plumber())
+        .pipe(print())
         .pipe(babel({
             presets: ['es2015']
         }))
@@ -67,8 +67,8 @@ gulp.task('build', ['sass', 'babel', 'libs'], function() {
 
 gulp.task('watch', function() {
     gulp.watch(sourcePaths.styles, ['sass']);
-    gulp.watch(sourcePaths.js, ['babel']);
-    gulp.watch(sourcePaths.views);
+    gulp.watch(sourcePaths.js, ['build']);
+    gulp.watch(sourcePaths.views, ['build']);
 });
 
 gulp.task('default', [

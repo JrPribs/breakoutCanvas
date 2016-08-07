@@ -10,8 +10,8 @@
         <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
         <script type="text/javascript" src="lib/lodash/dist/lodash.min.js"></script>
         <script type="text/javascript" src="lib/kibo/kibo.min.js"></script>
-        <script src="libs/polyfill.js"></script>
-        <script src="libs/system.js"></script>
+        <script src="lib/polyfill/dist/polyfill.min.js"></script>
+        <script src="lib/systemjs/build/system.min.js"></script>
         <script>
         System.config({
             packages: {
@@ -27,6 +27,7 @@
 
          System.import('js/more-codes.js')
                      .then(null, console.error.bind(console));
+        </script>
     </head>
 
     <body>
