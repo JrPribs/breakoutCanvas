@@ -125,18 +125,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: 'isHit',
             value: function isHit() {
-                var _this = this;
-
                 if (this.visible) {
-                    var hitSide = function hitSide() {
-                        return gameState.ball.addRadius(gameState.ball.x) === _this.x || gameState.ball.addRadius(gameState.ball.x) === _this.x + gameState.brickWidth;
-                    };
+                    // var hitSide = () => gameState.ball.addRadius(gameState.ball.x) === this.x || gameState.ball.addRadius(gameState.ball.x) === this.x + gameState.brickWidth;
                     var hitX = _.inRange(gameState.ball.addRadius(gameState.ball.x), this.x, this.x + gameState.brickWidth) || _.inRange(gameState.ball.minusRadius(gameState.ball.x), this.x, this.x + gameState.brickWidth);
                     var hitY = _.inRange(gameState.ball.addRadius(gameState.ball.y), this.y, this.y + gameState.brickHeight) || _.inRange(gameState.ball.minusRadius(gameState.ball.y), this.y, this.y + gameState.brickHeight);
 
-                    if (hitSide && hitY) {
-                        console.log('sidehit');
-                    }
+                    // if (hitSide && hitY) {
+                    //     console.log('sidehit');
+                    // }
 
                     return hitX && hitY;
                 } else {
@@ -162,12 +158,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         function Paddle() {
             _classCallCheck(this, Paddle);
 
-            var width = gameState.width / 10;
-            var height = 10;
-            var speed = 13;
-            var x = (gameState.width - this.width) / 2;
-            var y = gameState.height - this.height;
-            _.assign(this, { height: height, width: width, speed: speed, x: x, y: y });
+            this.height = 10;
+            this.speed = 13;
+            this.width = gameState.width / 10;
+            this.x = (gameState.width - this.width) / 2;
+            this.y = gameState.height - this.height;
         }
 
         _createClass(Paddle, [{

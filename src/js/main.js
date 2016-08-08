@@ -1,6 +1,10 @@
 (() => {
     'use strict';
 
+    import Paddle from 'paddle';
+    import Brick from 'brick';
+    import Ball from 'ball';
+
     var k = new Kibo();
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
@@ -86,161 +90,6 @@
             });
         });
     }
-
-    /*************************************************
-    * Brick - Brick - Brick - Brick - Brick - Brick **
-    *************************************************/
-
-    class Brick {
-        constructor(x, y) {
-            x = x * gameState.brickWidth;
-            y = y * gameState.brickHeight;
-            const visible = true;
-            const colors = {
-                fill: 'firebrick',
-                stroke: 'darkred'
-            };
-            _.assign(this, {colors, visible, x, y});
-        }
-    draw() {
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        this.setStyles();
-        ctx.rect(this.x, this.y, gameState.brickWidth, gameState.brickHeight);
-        ctx.stroke();
-        ctx.fill();
-        ctx.closePath();
-    }
-
-    isHit() {
-        if (this.visible) {
-            var hitSide = () => gameState.ball.addRadius(gameState.ball.x) === this.x || gameState.ball.addRadius(gameState.ball.x) === this.x + gameState.brickWidth;
-            var hitX = _.inRange(gameState.ball.addRadius(gameState.ball.x), this.x, this.x + gameState.brickWidth) || _.inRange(gameState.ball.minusRadius(gameState.ball.x), this.x, this.x + gameState.brickWidth);
-            var hitY = _.inRange(gameState.ball.addRadius(gameState.ball.y), this.y, this.y + gameState.brickHeight) || _.inRange(gameState.ball.minusRadius(gameState.ball.y), this.y, this.y + gameState.brickHeight);
-
-            if (hitSide && hitY) {
-                console.log('sidehit');
-            }
-
-            return hitX && hitY;
-        } else {
-            return false;
-        }
-    }
-
-    setStyles() {
-        ctx.strokeStyle = this.colors.stroke;
-        ctx.fillStyle = this.colors.fill;
-    }
-}
-
-    /************************************************
-    * Paddle - Paddle - Paddle - Paddle - Paddle ****
-    *************************************************/
-
-    class Paddle {
-        constructor() {
-           const width = gameState.width / 10;
-           const height = 10;
-           const speed = 13;
-           const x = (gameState.width - this.width) / 2;
-           const y = gameState.height - this.height;
-           _.assign(this, {height, width, speed, x, y});
-        }
-        draw(){
-            ctx.beginPath();
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.strokeStyle = '#000';
-            ctx.stroke();
-            ctx.fillStyle = 'blue';
-            ctx.fill();
-            ctx.closePath();
-        }
-
-        move() {
-            if (this.dir === 'left' && this.x > 0) {
-                this.x -= this.speed;
-            } else if (this.dir === 'right' && this.x + this.width <= canvas.width){
-                this.x += this.speed;
-            }
-        }
-        isHit() {
-            var hitX = _.inRange(gameState.ball.addRadius(gameState.ball.x), this.x, this.x + this.width + 1) || _.inRange(gameState.ball.minusRadius(gameState.ball.x), this.x, this.x + this.width + 1);
-            var hitY = _.inRange(gameState.ball.addRadius(gameState.ball.y), this.y, this.y + this.height + 1);
-            return hitY && hitX;
-        }
-    }
-
-    /************************************************
-    * Ball - Ball - Ball - Ball - Ball - Ball- Ball *
-    *************************************************/
-    class Ball {
-        constructor() {
-            const radius = 10;
-            const vel = {
-                x: 2,
-                y: -2
-            };
-            const x = canvas.width/ 2;
-            const y = canvas.height -  25;
-            const colors = {
-                fill: 'yellow',
-                stroke: '#000'
-            };
-            _.assign(this, {colors, radius, vel, x, y});
-        }
-
-    draw(x, y) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = this.colors.stroke;
-        ctx.fillStyle = this.colors.fill;
-        ctx.stroke();
-        ctx.fill();
-        ctx.closePath();
-    }
-    move() {
-        this.x += this.vel.x;
-        this.y += this.vel.y;
-        var hitRight = this.addRadius(this.x) > canvas.width;
-        var hitBottom = this.minusRadius(this.y) > canvas.height;
-        var hitLeft = this.minusRadius(this.x) < 0;
-        var hitTop = this.minusRadius(this.y) < 0;
-        var hitPaddle = gameState.paddle.isHit();
-        if (hitTop || hitPaddle) {
-            // Hit top wall
-            this.vel.y = -this.vel.y;
-        }
-        if (hitRight || hitLeft) {
-            // Hit right or left wall
-            this.vel.x = -this.vel.x;
-        }
-
-        if (hitBottom) {
-            if (gameState.lives === 0) {
-                ctx.font = "80px sans-serif";
-                ctx.textAlign = 'center';
-                ctx.fillText("GAME OVER", gameState.middle.w, gameState.middle.h);
-                ctx.font = "20px sans-serif";
-                ctx.fillText("Press Enter to start a new game", gameState.middle.w, gameState.middle.h + 20);
-            } else {
-                gameState.ball = new Ball();
-                gameState.paddle = new Paddle();
-                gameState.lives--;
-                drawLives();
-            }
-        }
-        this.draw();
-    }
-
-    addRadius(val) {
-        return val + this.radius;
-    }
-
-    minusRadius(val) {
-        return val - this.radius;
-    }
-}
 
     // keyboard controls via kibo.js
     var arrows = ['left', 'right'];
