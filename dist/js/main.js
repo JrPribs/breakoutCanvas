@@ -10,6 +10,188 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var k = new Kibo();
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
+
+    var Ball = function () {
+        function Ball() {
+            var _this = this;
+
+            _classCallCheck(this, Ball);
+
+            this.radius = 10;
+            this.vel = {
+                x: 2,
+                y: -2
+            };
+            this.x = canvas.width / 2;
+            this.y = canvas.height - 25;
+            this.colors = {
+                fill: 'yellow',
+                stroke: '#000'
+            };
+            this.bounds = {
+                right: function right() {
+                    return _this.addRadius(_this.x);
+                },
+                top: function top() {
+                    return _this.minusRadius(_this.y);
+                },
+                left: function left() {
+                    return _this.minusRadius(_this.x);
+                },
+                bottom: function bottom() {
+                    return _this.addRadius(_this.y);
+                }
+            };
+        }
+
+        _createClass(Ball, [{
+            key: 'draw',
+            value: function draw(x, y) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = this.colors.stroke;
+                ctx.fillStyle = this.colors.fill;
+                ctx.stroke();
+                ctx.fill();
+                ctx.closePath();
+            }
+        }, {
+            key: 'move',
+            value: function move() {
+                this.x += this.vel.x;
+                this.y += this.vel.y;
+                var hitRight = this.bounds.right() > canvas.width;
+                var hitBottom = this.bounds.top() > canvas.height;
+                var hitLeft = this.bounds.left() < 0;
+                var hitTop = this.bounds.top() < 0;
+                var hitPaddle = gameState.paddle.isHit();
+                if (hitTop || hitPaddle) {
+                    // Hit top wall
+                    this.vel.y = -this.vel.y;
+                }
+                if (hitRight || hitLeft) {
+                    // Hit right or left wall
+                    this.vel.x = -this.vel.x;
+                }
+
+                if (hitBottom) {
+                    if (gameState.lives === 0) {
+                        ctx.font = "80px sans-serif";
+                        ctx.textAlign = 'center';
+                        ctx.fillText("GAME OVER", gameState.middle.w, gameState.middle.h);
+                    } else {
+                        gameState.lives--;
+                        drawLives();
+                    }
+                }
+                this.draw();
+            }
+        }, {
+            key: 'addRadius',
+            value: function addRadius(val) {
+                return val + this.radius;
+            }
+        }, {
+            key: 'minusRadius',
+            value: function minusRadius(val) {
+                return val - this.radius;
+            }
+        }]);
+
+        return Ball;
+    }();
+
+    var Paddle = function () {
+        function Paddle() {
+            _classCallCheck(this, Paddle);
+
+            this.height = 10;
+            this.speed = 13;
+            this.width = gameState.width / 10;
+            this.x = (gameState.width - this.width) / 2;
+            this.y = gameState.height - this.height;
+        }
+
+        _createClass(Paddle, [{
+            key: 'draw',
+            value: function draw() {
+                ctx.beginPath();
+                ctx.rect(this.x, this.y, this.width, this.height);
+                ctx.strokeStyle = '#000';
+                ctx.stroke();
+                ctx.fillStyle = 'blue';
+                ctx.fill();
+                ctx.closePath();
+            }
+        }, {
+            key: 'move',
+            value: function move() {
+                if (this.dir === 'left' && this.x > 0) {
+                    this.x -= this.speed;
+                } else if (this.dir === 'right' && this.x + this.width <= canvas.width) {
+                    this.x += this.speed;
+                }
+            }
+        }, {
+            key: 'isHit',
+            value: function isHit() {
+                var hitX = _.inRange(gameState.ball.addRadius(gameState.ball.x), this.x, this.x + this.width + 1) || _.inRange(gameState.ball.minusRadius(gameState.ball.x), this.x, this.x + this.width + 1);
+                var hitY = _.inRange(gameState.ball.addRadius(gameState.ball.y), this.y, this.y + this.height + 1);
+                return hitY && hitX;
+            }
+        }]);
+
+        return Paddle;
+    }();
+
+    var Brick = function () {
+        function Brick(x, y) {
+            _classCallCheck(this, Brick);
+
+            this.x = x * gameState.brickWidth;
+            this.y = y * gameState.brickHeight;
+            this.visible = true;
+            this.colors = {
+                fill: 'firebrick',
+                stroke: 'darkred'
+            };
+            this.bounds = {};
+        }
+
+        _createClass(Brick, [{
+            key: 'draw',
+            value: function draw() {
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                this.setStyles();
+                ctx.rect(this.x, this.y, gameState.brickWidth, gameState.brickHeight);
+                ctx.stroke();
+                ctx.fill();
+                ctx.closePath();
+            }
+        }, {
+            key: 'isHit',
+            value: function isHit() {
+                if (this.visible) {
+                    var hitX = _.inRange(gameState.ball.bounds.right(), this.x, this.x + gameState.brickWidth) || _.inRange(gameState.ball.bounds.left(), this.x, this.x + gameState.brickWidth);
+                    var hitY = _.inRange(gameState.ball.bounds.bottom(), this.y, this.y + gameState.brickHeight) || _.inRange(gameState.ball.bounds.top(), this.y, this.y + gameState.brickHeight);
+
+                    return hitX && hitY;
+                } else {
+                    return false;
+                }
+            }
+        }, {
+            key: 'setStyles',
+            value: function setStyles() {
+                ctx.strokeStyle = this.colors.stroke;
+                ctx.fillStyle = this.colors.fill;
+            }
+        }]);
+
+        return Brick;
+    }();
+
     var gameState = {
         width: canvas.width,
         height: canvas.height,
@@ -93,197 +275,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         });
     }
 
-    /*************************************************
-    * Brick - Brick - Brick - Brick - Brick - Brick **
-    *************************************************/
-
-    var Brick = function () {
-        function Brick(x, y) {
-            _classCallCheck(this, Brick);
-
-            x = x * gameState.brickWidth;
-            y = y * gameState.brickHeight;
-            var visible = true;
-            var colors = {
-                fill: 'firebrick',
-                stroke: 'darkred'
-            };
-            _.assign(this, { colors: colors, visible: visible, x: x, y: y });
-        }
-
-        _createClass(Brick, [{
-            key: 'draw',
-            value: function draw() {
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                this.setStyles();
-                ctx.rect(this.x, this.y, gameState.brickWidth, gameState.brickHeight);
-                ctx.stroke();
-                ctx.fill();
-                ctx.closePath();
-            }
-        }, {
-            key: 'isHit',
-            value: function isHit() {
-                if (this.visible) {
-                    // var hitSide = () => gameState.ball.addRadius(gameState.ball.x) === this.x || gameState.ball.addRadius(gameState.ball.x) === this.x + gameState.brickWidth;
-                    var hitX = _.inRange(gameState.ball.addRadius(gameState.ball.x), this.x, this.x + gameState.brickWidth) || _.inRange(gameState.ball.minusRadius(gameState.ball.x), this.x, this.x + gameState.brickWidth);
-                    var hitY = _.inRange(gameState.ball.addRadius(gameState.ball.y), this.y, this.y + gameState.brickHeight) || _.inRange(gameState.ball.minusRadius(gameState.ball.y), this.y, this.y + gameState.brickHeight);
-
-                    // if (hitSide && hitY) {
-                    //     console.log('sidehit');
-                    // }
-
-                    return hitX && hitY;
-                } else {
-                    return false;
-                }
-            }
-        }, {
-            key: 'setStyles',
-            value: function setStyles() {
-                ctx.strokeStyle = this.colors.stroke;
-                ctx.fillStyle = this.colors.fill;
-            }
-        }]);
-
-        return Brick;
-    }();
-
-    /************************************************
-    * Paddle - Paddle - Paddle - Paddle - Paddle ****
-    *************************************************/
-
-    var Paddle = function () {
-        function Paddle() {
-            _classCallCheck(this, Paddle);
-
-            this.height = 10;
-            this.speed = 13;
-            this.width = gameState.width / 10;
-            this.x = (gameState.width - this.width) / 2;
-            this.y = gameState.height - this.height;
-        }
-
-        _createClass(Paddle, [{
-            key: 'draw',
-            value: function draw() {
-                ctx.beginPath();
-                ctx.rect(this.x, this.y, this.width, this.height);
-                ctx.strokeStyle = '#000';
-                ctx.stroke();
-                ctx.fillStyle = 'blue';
-                ctx.fill();
-                ctx.closePath();
-            }
-        }, {
-            key: 'move',
-            value: function move() {
-                if (this.dir === 'left' && this.x > 0) {
-                    this.x -= this.speed;
-                } else if (this.dir === 'right' && this.x + this.width <= canvas.width) {
-                    this.x += this.speed;
-                }
-            }
-        }, {
-            key: 'isHit',
-            value: function isHit() {
-                var hitX = _.inRange(gameState.ball.addRadius(gameState.ball.x), this.x, this.x + this.width + 1) || _.inRange(gameState.ball.minusRadius(gameState.ball.x), this.x, this.x + this.width + 1);
-                var hitY = _.inRange(gameState.ball.addRadius(gameState.ball.y), this.y, this.y + this.height + 1);
-                return hitY && hitX;
-            }
-        }]);
-
-        return Paddle;
-    }();
-
-    /************************************************
-    * Ball - Ball - Ball - Ball - Ball - Ball- Ball *
-    *************************************************/
-
-
-    var Ball = function () {
-        function Ball() {
-            _classCallCheck(this, Ball);
-
-            var radius = 10;
-            var vel = {
-                x: 2,
-                y: -2
-            };
-            var x = canvas.width / 2;
-            var y = canvas.height - 25;
-            var colors = {
-                fill: 'yellow',
-                stroke: '#000'
-            };
-            _.assign(this, { colors: colors, radius: radius, vel: vel, x: x, y: y });
-        }
-
-        _createClass(Ball, [{
-            key: 'draw',
-            value: function draw(x, y) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.strokeStyle = this.colors.stroke;
-                ctx.fillStyle = this.colors.fill;
-                ctx.stroke();
-                ctx.fill();
-                ctx.closePath();
-            }
-        }, {
-            key: 'move',
-            value: function move() {
-                this.x += this.vel.x;
-                this.y += this.vel.y;
-                var hitRight = this.addRadius(this.x) > canvas.width;
-                var hitBottom = this.minusRadius(this.y) > canvas.height;
-                var hitLeft = this.minusRadius(this.x) < 0;
-                var hitTop = this.minusRadius(this.y) < 0;
-                var hitPaddle = gameState.paddle.isHit();
-                if (hitTop || hitPaddle) {
-                    // Hit top wall
-                    this.vel.y = -this.vel.y;
-                }
-                if (hitRight || hitLeft) {
-                    // Hit right or left wall
-                    this.vel.x = -this.vel.x;
-                }
-
-                if (hitBottom) {
-                    if (gameState.lives === 0) {
-                        ctx.font = "80px sans-serif";
-                        ctx.textAlign = 'center';
-                        ctx.fillText("GAME OVER", gameState.middle.w, gameState.middle.h);
-                        ctx.font = "20px sans-serif";
-                        ctx.fillText("Press Enter to start a new game", gameState.middle.w, gameState.middle.h + 20);
-                    } else {
-                        gameState.ball = new Ball();
-                        gameState.paddle = new Paddle();
-                        gameState.lives--;
-                        drawLives();
-                    }
-                }
-                this.draw();
-            }
-        }, {
-            key: 'addRadius',
-            value: function addRadius(val) {
-                return val + this.radius;
-            }
-        }, {
-            key: 'minusRadius',
-            value: function minusRadius(val) {
-                return val - this.radius;
-            }
-        }]);
-
-        return Ball;
-    }();
-
     // keyboard controls via kibo.js
-
-
     var arrows = ['left', 'right'];
     k.down(arrows, function () {
         gameState.paddle.dir = k.lastKey();

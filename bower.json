@@ -4,8 +4,6 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "kibo": "^1.1.0",
-    "lodash": "^4.14.1",
-    "systemjs": "*",
-    "polyfill": "*"
+    "lodash": "^4.14.1"
   }
 }

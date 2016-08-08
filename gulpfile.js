@@ -40,14 +40,6 @@ gulp.task('babel', function() {
         .pipe(gulp.dest(distPaths.main));
 });
 
-gulp.task('libs', function(){
-    return gulp.src([
-        'node_modules/systemjs/dist/system.js',
-        'node_modules/babel-polyfill/dist/polyfill.js'])
-        .pipe(print())
-        .pipe(gulp.dest(distPaths.lib));
-});
-
 gulp.task('webserver', function() {
     gulp.src('dist/')
         .pipe(webserver({
@@ -58,7 +50,7 @@ gulp.task('webserver', function() {
         }));
 });
 
-gulp.task('build', ['sass', 'babel', 'libs'], function() {
+gulp.task('build', ['sass', 'babel'], function() {
     gulp.src(['src/*.html'])
         .pipe(print())
         .pipe(gulp.dest('dist'));

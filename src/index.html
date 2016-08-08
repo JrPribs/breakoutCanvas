@@ -10,21 +10,6 @@
         <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
         <script type="text/javascript" src="lib/lodash/dist/lodash.min.js"></script>
         <script type="text/javascript" src="lib/kibo/kibo.min.js"></script>
-        <script src="lib/polyfill.js"></script>
-        <script src="lib/system.js"></script>
-        <script>
-        System.config({
-            packages: {
-                js: {
-                    format: 'register',
-                    defaultExtension: 'js'
-                },
-            },
-            meta: {
-                'js/*': {format: 'cjs'}
-            }
-        });
-        </script>
     </head>
 
     <body>
@@ -39,6 +24,5 @@
             </div>
         </div>
         <script src="js/main.js"></script>
-
     </body>
 </html>
