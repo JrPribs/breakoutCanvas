@@ -8,10 +8,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/************************************************
-* Paddle - Paddle - Paddle - Paddle - Paddle ****
-*************************************************/
-
 var Paddle = exports.Paddle = function () {
     function Paddle() {
         _classCallCheck(this, Paddle);

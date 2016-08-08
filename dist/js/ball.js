@@ -8,9 +8,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/************************************************
-* Ball - Ball - Ball - Ball - Ball - Ball- Ball *
-*************************************************/
 var Ball = exports.Ball = function () {
     function Ball() {
         _classCallCheck(this, Ball);
@@ -69,11 +66,7 @@ var Ball = exports.Ball = function () {
                     ctx.font = "80px sans-serif";
                     ctx.textAlign = 'center';
                     ctx.fillText("GAME OVER", gameState.middle.w, gameState.middle.h);
-                    ctx.font = "20px sans-serif";
-                    ctx.fillText("Press Enter to start a new game", gameState.middle.w, gameState.middle.h + 20);
                 } else {
-                    gameState.ball = new Ball();
-                    gameState.paddle = new Paddle();
                     gameState.lives--;
                     drawLives();
                 }
