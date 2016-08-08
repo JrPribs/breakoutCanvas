@@ -11,6 +11,53 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
 
+    var Brick = function () {
+        function Brick(x, y) {
+            _classCallCheck(this, Brick);
+
+            this.x = x * gameState.brickWidth;
+            this.y = y * gameState.brickHeight;
+            this.visible = true;
+            this.colors = {
+                fill: 'firebrick',
+                stroke: 'darkred'
+            };
+        }
+
+        _createClass(Brick, [{
+            key: 'draw',
+            value: function draw() {
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                this.setStyles();
+                ctx.rect(this.x, this.y, gameState.brickWidth, gameState.brickHeight);
+                ctx.stroke();
+                ctx.fill();
+                ctx.closePath();
+            }
+        }, {
+            key: 'isHit',
+            value: function isHit() {
+                if (this.visible) {
+                    var hitX = _.inRange(gameState.ball.bounds.right(), this.x, this.x + gameState.brickWidth) || _.inRange(gameState.ball.bounds.left(), this.x, this.x + gameState.brickWidth);
+                    var hitY = _.inRange(gameState.ball.bounds.bottom(), this.y, this.y + gameState.brickHeight) || _.inRange(gameState.ball.bounds.top(), this.y, this.y + gameState.brickHeight);
+
+                    return hitX && hitY;
+                } else {
+                    return false;
+                }
+            }
+        }, {
+            key: 'setStyles',
+            value: function setStyles() {
+                ctx.strokeStyle = this.colors.stroke;
+                ctx.fillStyle = this.colors.fill;
+            }
+        }]);
+
+        return Brick;
+    }();
+
     var Ball = function () {
         function Ball() {
             var _this = this;
@@ -81,7 +128,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         ctx.fillText("GAME OVER", gameState.middle.w, gameState.middle.h);
                     } else {
                         gameState.lives--;
-                        drawLives();
+                        gameState.paddle = new Paddle();
+                        gameState.ball = new Ball();
                     }
                 }
                 this.draw();
@@ -142,54 +190,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }]);
 
         return Paddle;
-    }();
-
-    var Brick = function () {
-        function Brick(x, y) {
-            _classCallCheck(this, Brick);
-
-            this.x = x * gameState.brickWidth;
-            this.y = y * gameState.brickHeight;
-            this.visible = true;
-            this.colors = {
-                fill: 'firebrick',
-                stroke: 'darkred'
-            };
-            this.bounds = {};
-        }
-
-        _createClass(Brick, [{
-            key: 'draw',
-            value: function draw() {
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                this.setStyles();
-                ctx.rect(this.x, this.y, gameState.brickWidth, gameState.brickHeight);
-                ctx.stroke();
-                ctx.fill();
-                ctx.closePath();
-            }
-        }, {
-            key: 'isHit',
-            value: function isHit() {
-                if (this.visible) {
-                    var hitX = _.inRange(gameState.ball.bounds.right(), this.x, this.x + gameState.brickWidth) || _.inRange(gameState.ball.bounds.left(), this.x, this.x + gameState.brickWidth);
-                    var hitY = _.inRange(gameState.ball.bounds.bottom(), this.y, this.y + gameState.brickHeight) || _.inRange(gameState.ball.bounds.top(), this.y, this.y + gameState.brickHeight);
-
-                    return hitX && hitY;
-                } else {
-                    return false;
-                }
-            }
-        }, {
-            key: 'setStyles',
-            value: function setStyles() {
-                ctx.strokeStyle = this.colors.stroke;
-                ctx.fillStyle = this.colors.fill;
-            }
-        }]);
-
-        return Brick;
     }();
 
     var gameState = {
