@@ -39,10 +39,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             key: 'isHit',
             value: function isHit() {
                 if (this.visible) {
-                    var hitX = _.inRange(gameState.ball.bounds.right(), this.x, this.x + gameState.brickWidth) || _.inRange(gameState.ball.bounds.left(), this.x, this.x + gameState.brickWidth);
-                    var hitY = _.inRange(gameState.ball.bounds.bottom(), this.y, this.y + gameState.brickHeight) || _.inRange(gameState.ball.bounds.top(), this.y, this.y + gameState.brickHeight);
-
-                    return hitX && hitY;
+                    var ballBounds = {
+                        right: gameState.ball.bounds.right(),
+                        left: gameState.ball.bounds.left(),
+                        top: gameState.ball.bounds.top(),
+                        bottom: gameState.ball.bounds.bottom()
+                    };
+                    var hitX = _.inRange(ballBounds.right + gameState.ball, this.x + 1, this.x + gameState.brickWidth) || _.inRange(ballBounds.left, this.x + 1, this.x + gameState.brickWidth);
+                    var hitY = _.inRange(ballBounds.bottom, this.y, this.y + gameState.brickHeight + 1) || _.inRange(ballBounds.top, this.y, this.y + gameState.brickHeight + 1);
+                    if (this.x === ballBounds.right && hitY || this.x === ballBounds.left && hitY) {
+                        gameState.ball.bounceX();
+                        return true;
+                    } else if (hitX && hitY) {
+                        gameState.ball.bounceY();
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else {
                     return false;
                 }
@@ -58,6 +71,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return Brick;
     }();
 
+    function buildBricks() {
+        return _.map(gameState.bricks, function (rows, y) {
+            return _.map(rows, function (brick, x) {
+                return new Brick(x, y);
+            });
+        });
+    }
+
     var Ball = function () {
         function Ball() {
             var _this = this;
@@ -66,8 +87,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             this.radius = 10;
             this.vel = {
-                x: 2,
-                y: -2
+                x: 3,
+                y: -3
             };
             this.x = canvas.width / 2;
             this.y = canvas.height - 25;
@@ -107,32 +128,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             value: function move() {
                 this.x += this.vel.x;
                 this.y += this.vel.y;
-                var hitRight = this.bounds.right() > canvas.width;
-                var hitBottom = this.bounds.top() > canvas.height;
-                var hitLeft = this.bounds.left() < 0;
-                var hitTop = this.bounds.top() < 0;
-                var hitPaddle = gameState.paddle.isHit();
-                if (hitTop || hitPaddle) {
-                    // Hit top wall
-                    this.vel.y = -this.vel.y;
-                }
-                if (hitRight || hitLeft) {
-                    // Hit right or left wall
-                    this.vel.x = -this.vel.x;
-                }
-
-                if (hitBottom) {
-                    if (gameState.lives === 0) {
-                        ctx.font = "80px sans-serif";
-                        ctx.textAlign = 'center';
-                        ctx.fillText("GAME OVER", gameState.middle.w, gameState.middle.h);
-                    } else {
-                        gameState.lives--;
-                        gameState.paddle = new Paddle();
-                        gameState.ball = new Ball();
-                    }
-                }
                 this.draw();
+            }
+        }, {
+            key: 'bounceY',
+            value: function bounceY() {
+                this.vel.y = -this.vel.y;
+            }
+        }, {
+            key: 'bounceX',
+            value: function bounceX() {
+                this.vel.x = -this.vel.x;
             }
         }, {
             key: 'addRadius',
@@ -220,7 +226,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
     };
 
-    gameState.pause = function () {
+    function pause() {
         ctx.font = '50px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillStyle = '#000';
@@ -228,7 +234,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         ctx.font = '20px sans-serif';
         ctx.fillStyle = '#D0D0D0';
         ctx.fillText('Press space to resume', gameState.middle.w, gameState.middle.h + 25);
-    };
+    }
 
     function drawLives() {
         ctx.font = "15px sans-serif";
@@ -244,25 +250,46 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         ctx.fillText('Score: ' + gameState.score, 0, canvas.height - 1);
     }
 
-    function buildBricks() {
-        return _.map(gameState.bricks, function (rows, y) {
-            return _.map(rows, function (brick, x) {
-                return new Brick(x, y);
-            });
-        });
-    }
-
-    function checkHit() {
-        _.forEach(gameState.bricks, function (row, y) {
-            _.forEach(row, function (brick, x) {
+    function checkBrickHit() {
+        _.forEach(gameState.bricks, function (row) {
+            _.forEach(row, function (brick) {
                 var hit = brick.isHit();
                 if (hit) {
                     brick.visible = false;
                     gameState.score += 5;
-                    gameState.ball.vel.y = -gameState.ball.vel.y;
                 }
             });
         });
+    }
+
+    function checkHits() {
+        var hitRight = gameState.ball.bounds.right() > canvas.width;
+        var hitBottom = gameState.ball.bounds.top() > canvas.height;
+        var hitLeft = gameState.ball.bounds.left() < 0;
+        var hitTop = gameState.ball.bounds.top() < 0;
+        var hitPaddle = gameState.paddle.isHit();
+
+        if (hitTop || hitPaddle) {
+            // Hit top wall
+            gameState.ball.bounceY();
+        }
+
+        if (hitRight || hitLeft) {
+            // Hit right or left wall
+            gameState.ball.bounceX();
+        }
+
+        if (hitBottom) {
+            if (gameState.lives === 0) {
+                ctx.font = "80px sans-serif";
+                ctx.textAlign = 'center';
+                ctx.fillText("GAME OVER", gameState.middle.w, gameState.middle.h);
+            } else {
+                gameState.lives--;
+                gameState.paddle = new Paddle();
+                gameState.ball = new Ball();
+            }
+        }
     }
 
     function drawBricks() {
@@ -283,8 +310,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     });
 
     k.down('enter', function () {
-        gameState.isNew = false;
-        main();
+        if (gameState.isNew) {
+            gameState.isNew = false;
+            main();
+        }
     });
 
     k.down('space', function () {
@@ -308,17 +337,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         // clear last Frame
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBricks();
+        checkBrickHit();
+        checkHits();
         gameState.ball.move();
         gameState.paddle.draw();
         gameState.paddle.isHit();
-        checkHit();
         drawLives();
         drawScore();
         if (gameState.isNew === true) {
             ctx.textAlign = 'center';
             ctx.fillText('Press enter to start the game', gameState.middle.w, gameState.middle.h);
         } else if (gameState.paused) {
-            gameState.pause();
+            pause();
         } else {
             window.requestAnimationFrame(function () {
                 main();
