@@ -17,6 +17,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             this.x = x * gameState.brickWidth;
             this.y = y * gameState.brickHeight;
+            this.edges = {
+                x: this.x + gameState.brickWidth,
+                y: this.x + gameState.brickHeight
+            };
             this.visible = true;
             this.colors = {
                 fill: 'firebrick',
@@ -38,12 +42,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: 'hitSide',
             value: function hitSide() {
-                return _.inRange(gameState.ball.x + gameState.ball.vel.x, this.x - gameState.ball.radius, this.x + gameState.ball.radius);
+                var newX = gameState.ball.x + gameState.ball.vel.x;
+                var leftOffset = gameState.ball.minusRadius(this.x);
+                var rightOffset = gameState.ball.addRadius(this.edges.x);
+                var hitLeft = _.inRange(newX, leftOffset, this.x + 1);
+                var hitRight = _.inRange(newX, this.edges.x, rightOffset + 1);
+                return hitLeft || hitRight;
             }
         }, {
             key: 'hitX',
             value: function hitX() {
-                return _.inRange(gameState.ball.x + gameState.ball.vel.x, this.x + gameState.ball.radius, this.x + gameState.brickWidth + gameState.ball.radius);
+                var newX = gameState.ball.x + gameState.ball.vel.x;
+                return _.inRange(newX, this.x + gameState.ball.radius, this.x + gameState.brickWidth + gameState.ball.radius);
             }
         }, {
             key: 'hitY',
