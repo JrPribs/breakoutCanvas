@@ -36,29 +36,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 ctx.closePath();
             }
         }, {
+            key: 'hitSide',
+            value: function hitSide() {
+                return _.inRange(gameState.ball.x + gameState.ball.vel.x, this.x - gameState.ball.radius, this.x + gameState.ball.radius);
+            }
+        }, {
+            key: 'hitX',
+            value: function hitX() {
+                return _.inRange(gameState.ball.x + gameState.ball.vel.x, this.x + gameState.ball.radius, this.x + gameState.brickWidth + gameState.ball.radius);
+            }
+        }, {
+            key: 'hitY',
+            value: function hitY() {
+                return _.inRange(gameState.ball.y, this.y - 12, this.y + gameState.brickHeight + gameState.ball.radius + 4);
+            }
+        }, {
             key: 'isHit',
             value: function isHit() {
-                if (this.visible) {
-                    var ballBounds = {
-                        right: gameState.ball.bounds.right(),
-                        left: gameState.ball.bounds.left(),
-                        top: gameState.ball.bounds.top(),
-                        bottom: gameState.ball.bounds.bottom()
-                    };
-                    var hitX = _.inRange(ballBounds.right + gameState.ball, this.x + 1, this.x + gameState.brickWidth) || _.inRange(ballBounds.left, this.x + 1, this.x + gameState.brickWidth);
-                    var hitY = _.inRange(ballBounds.bottom, this.y, this.y + gameState.brickHeight + 1) || _.inRange(ballBounds.top, this.y, this.y + gameState.brickHeight + 1);
-                    if (this.x === ballBounds.right && hitY || this.x === ballBounds.left && hitY) {
-                        gameState.ball.bounceX();
-                        return true;
-                    } else if (hitX && hitY) {
-                        gameState.ball.bounceY();
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
+                return this.hitX() && this.hitY();
+            }
+        }, {
+            key: 'isSideHit',
+            value: function isSideHit() {
+                return this.hitSide() && this.hitY();
             }
         }, {
             key: 'setStyles',
@@ -75,6 +75,31 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return _.map(gameState.bricks, function (rows, y) {
             return _.map(rows, function (brick, x) {
                 return new Brick(x, y);
+            });
+        });
+    }
+
+    function checkBrickHit() {
+        // check if hit this frame, so direction isnt changed twice
+        var hit = false;
+        _.forEach(gameState.bricks, function (row) {
+            _.forEach(row, function (brick) {
+                if (brick.visible) {
+                    var sideHit = brick.isSideHit();
+                    var regHit = brick.isHit();
+                    if (!hit) {
+                        if (sideHit) {
+                            gameState.ball.bounceX();
+                        } else if (regHit) {
+                            gameState.ball.bounceY();
+                        }
+                    }
+                    if (sideHit || regHit) {
+                        hit = true;
+                        brick.visible = false;
+                        gameState.score += 5;
+                    }
+                }
             });
         });
     }
@@ -248,18 +273,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         ctx.fillStyle = '#000';
         ctx.textAlign = 'left';
         ctx.fillText('Score: ' + gameState.score, 0, canvas.height - 1);
-    }
-
-    function checkBrickHit() {
-        _.forEach(gameState.bricks, function (row) {
-            _.forEach(row, function (brick) {
-                var hit = brick.isHit();
-                if (hit) {
-                    brick.visible = false;
-                    gameState.score += 5;
-                }
-            });
-        });
     }
 
     function checkHits() {

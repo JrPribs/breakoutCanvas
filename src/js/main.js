@@ -25,32 +25,25 @@
             ctx.closePath();
         }
 
-        isHit() {
-            if (this.visible) {
-                var ballBounds = {
-                    right: gameState.ball.bounds.right(),
-                    left: gameState.ball.bounds.left(),
-                    top: gameState.ball.bounds.top(),
-                    bottom: gameState.ball.bounds.bottom()
-                };
-                var hitX = _.inRange(ballBounds.right + gameState.ball, this.x + 1, this.x + gameState.brickWidth) || _.inRange(ballBounds.left, this.x + 1, this.x +
-                    gameState.brickWidth);
-                var hitY = _.inRange(ballBounds.bottom, this.y, this.y + gameState.brickHeight + 1) || _.inRange(ballBounds.top, this.y, this.y +
-                    gameState.brickHeight + 1);
-                if (this.x === ballBounds.right && hitY || this.x === ballBounds.left && hitY) {
-                    gameState.ball.bounceX();
-                    return true;
-                } else if(hitX && hitY) {
-                    gameState.ball.bounceY();
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
+        hitSide() {
+            return _.inRange(gameState.ball.x + gameState.ball.vel.x, this.x - gameState.ball.radius, this.x + gameState.ball.radius);
         }
 
+        hitX() {
+            return _.inRange(gameState.ball.x + gameState.ball.vel.x, this.x + gameState.ball.radius, this.x + gameState.brickWidth + gameState.ball.radius);
+        }
+
+        hitY() {
+            return _.inRange(gameState.ball.y, this.y - 12, this.y + gameState.brickHeight + gameState.ball.radius + 4);
+        }
+
+        isHit() {
+            return this.hitX() && this.hitY();
+        }
+
+        isSideHit() {
+            return this.hitSide() && this.hitY();
+        }
         setStyles() {
             ctx.strokeStyle = this.colors.stroke;
             ctx.fillStyle = this.colors.fill;
@@ -61,6 +54,31 @@
         return _.map(gameState.bricks, (rows, y) => {
             return _.map(rows, (brick, x) => {
                 return new Brick(x, y);
+            });
+        });
+    }
+
+    function checkBrickHit() {
+        // check if hit this frame, so direction isnt changed twice
+        let hit = false;
+         _.forEach(gameState.bricks, row => {
+            _.forEach(row, brick => {
+                if (brick.visible) {
+                    const sideHit = brick.isSideHit();
+                    const regHit = brick.isHit();
+                    if (!hit) {
+                        if (sideHit) {
+                            gameState.ball.bounceX();
+                        } else if (regHit) {
+                            gameState.ball.bounceY();
+                        }
+                    }
+                    if (sideHit || regHit) {
+                        hit = true;
+                        brick.visible = false;
+                        gameState.score += 5;
+                    }
+                }
             });
         });
     }
@@ -204,18 +222,6 @@
         ctx.fillStyle = '#000';
         ctx.textAlign = 'left';
         ctx.fillText('Score: ' + gameState.score, 0, canvas.height - 1);
-    }
-
-    function checkBrickHit() {
-         _.forEach(gameState.bricks, row => {
-            _.forEach(row, brick => {
-                const hit = brick.isHit();
-                if (hit) {
-                    brick.visible = false;
-                    gameState.score += 5;
-                }
-            });
-        });
     }
 
     function checkHits() {
