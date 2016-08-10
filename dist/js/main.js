@@ -40,16 +40,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 ctx.closePath();
             }
         }, {
-            key: 'hitSide',
-            value: function hitSide() {
-                var newX = gameState.ball.x + gameState.ball.vel.x;
-                var leftOffset = gameState.ball.minusRadius(this.x);
-                var rightOffset = gameState.ball.addRadius(this.edge.x);
-                var hitLeft = _.inRange(newX, leftOffset, this.x + 1);
-                var hitRight = _.inRange(newX, this.edge.x, rightOffset + 1);
-                return hitLeft || hitRight;
-            }
-        }, {
             key: 'isHit',
             value: function isHit() {
                 return hitX(this.x, this.edge.x) && hitY(this.y, this.edge.y);
@@ -57,7 +47,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: 'isSideHit',
             value: function isSideHit() {
-                return this.hitSide() && hitY(this.y, this.edge.y);
+                return hitSide(this.x, this.edge.x) && hitY(this.y, this.edge.y);
             }
         }, {
             key: 'setStyles',
@@ -188,6 +178,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             this.width = gameState.width / 10;
             this.x = (gameState.width - this.width) / 2;
             this.y = gameState.height - this.height;
+            this.edge = {
+                x: this.x + this.width,
+                y: this.y + this.height
+            };
         }
 
         _createClass(Paddle, [{
@@ -213,9 +207,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: 'isHit',
             value: function isHit() {
-                var hitX = _.inRange(gameState.ball.addRadius(gameState.ball.x), this.x, this.x + this.width + 1) || _.inRange(gameState.ball.minusRadius(gameState.ball.x), this.x, this.x + this.width + 1);
-                var hitY = _.inRange(gameState.ball.addRadius(gameState.ball.y), this.y, this.y + this.height + 1);
-                return hitY && hitX;
+                return hitX(this.x, this.edge.x) && hitY(this.y, this.edge.y);
             }
         }]);
 
@@ -230,6 +222,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     function hitY(y, edgeY) {
         var newY = gameState.ball.y + gameState.ball.vel.y;
         return _.inRange(newY, gameState.ball.minusRadius(y), gameState.ball.addRadius(edgeY));
+    }
+
+    function hitSide(x, edgeX) {
+        var newX = gameState.ball.x + gameState.ball.vel.x;
+        var hitLeft = _.inRange(newX, gameState.ball.minusRadius(x), x);
+        var hitRight = _.inRange(newX, edgeX, gameState.ball.addRadius(edgeX));
+        return hitLeft || hitRight;
     }
 
     var gameState = {

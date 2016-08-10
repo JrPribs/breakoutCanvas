@@ -29,21 +29,12 @@
             ctx.closePath();
         }
 
-        hitSide() {
-            const newX = gameState.ball.x + gameState.ball.vel.x;
-            let leftOffset = gameState.ball.minusRadius(this.x);
-            let rightOffset = gameState.ball.addRadius(this.edge.x);
-            const hitLeft = _.inRange(newX, leftOffset, this.x + 1);
-            const hitRight = _.inRange(newX, this.edge.x, rightOffset + 1);
-            return hitLeft || hitRight;
-        }
-
         isHit() {
             return hitX(this.x, this.edge.x) && hitY(this.y, this.edge.y);
         }
 
         isSideHit() {
-            return this.hitSide() && hitY(this.y, this.edge.y);
+            return hitSide(this.x, this.edge.x) && hitY(this.y, this.edge.y);
         }
         setStyles() {
             ctx.strokeStyle = this.colors.stroke;
@@ -145,6 +136,10 @@
             this.width = gameState.width / 10;
             this.x = (gameState.width - this.width) / 2;
             this.y = gameState.height - this.height;
+            this.edge = {
+                x: this.x + this.width,
+                y: this.y + this.height
+            };
         }
 
         draw() {
@@ -166,11 +161,9 @@
         }
 
         isHit() {
-            var hitX = _.inRange(gameState.ball.addRadius(gameState.ball.x), this.x, this.x + this.width + 1) || _.inRange(gameState.ball.minusRadius(gameState.ball.x), this.x, this.x + this.width +
-                1);
-            var hitY = _.inRange(gameState.ball.addRadius(gameState.ball.y), this.y, this.y + this.height + 1);
-            return hitY && hitX;
+            return hitX(this.x, this.edge.x) && hitY(this.y, this.edge.y);
         }
+
     }
 
     function hitX(x, edgeX) {
@@ -181,6 +174,13 @@
     function hitY(y, edgeY) {
         const newY = gameState.ball.y + gameState.ball.vel.y;
         return _.inRange(newY, gameState.ball.minusRadius(y), gameState.ball.addRadius(edgeY));
+    }
+
+    function hitSide(x, edgeX) {
+        const newX = gameState.ball.x + gameState.ball.vel.x;
+        const hitLeft = _.inRange(newX, gameState.ball.minusRadius(x), x);
+        const hitRight = _.inRange(newX, edgeX, gameState.ball.addRadius(edgeX));
+        return hitLeft || hitRight;
     }
 
     var gameState = {
