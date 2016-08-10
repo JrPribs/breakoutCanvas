@@ -17,9 +17,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             this.x = x * gameState.brickWidth;
             this.y = y * gameState.brickHeight;
-            this.edges = {
+            this.edge = {
                 x: this.x + gameState.brickWidth,
-                y: this.x + gameState.brickHeight
+                y: this.y + gameState.brickHeight
             };
             this.visible = true;
             this.colors = {
@@ -44,31 +44,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             value: function hitSide() {
                 var newX = gameState.ball.x + gameState.ball.vel.x;
                 var leftOffset = gameState.ball.minusRadius(this.x);
-                var rightOffset = gameState.ball.addRadius(this.edges.x);
+                var rightOffset = gameState.ball.addRadius(this.edge.x);
                 var hitLeft = _.inRange(newX, leftOffset, this.x + 1);
-                var hitRight = _.inRange(newX, this.edges.x, rightOffset + 1);
+                var hitRight = _.inRange(newX, this.edge.x, rightOffset + 1);
                 return hitLeft || hitRight;
-            }
-        }, {
-            key: 'hitX',
-            value: function hitX() {
-                var newX = gameState.ball.x + gameState.ball.vel.x;
-                return _.inRange(newX, this.x + gameState.ball.radius, this.x + gameState.brickWidth + gameState.ball.radius);
-            }
-        }, {
-            key: 'hitY',
-            value: function hitY() {
-                return _.inRange(gameState.ball.y, this.y - 12, this.y + gameState.brickHeight + gameState.ball.radius + 4);
             }
         }, {
             key: 'isHit',
             value: function isHit() {
-                return this.hitX() && this.hitY();
+                return hitX(this.x, this.edge.x) && hitY(this.y, this.edge.y);
             }
         }, {
             key: 'isSideHit',
             value: function isSideHit() {
-                return this.hitSide() && this.hitY();
+                return this.hitSide() && hitY(this.y, this.edge.y);
             }
         }, {
             key: 'setStyles',
@@ -232,6 +221,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         return Paddle;
     }();
+
+    function hitX(x, edgeX) {
+        var newX = gameState.ball.x + gameState.ball.vel.x;
+        return _.inRange(newX, gameState.ball.minusRadius(x), gameState.ball.addRadius(edgeX));
+    }
+
+    function hitY(y, edgeY) {
+        var newY = gameState.ball.y + gameState.ball.vel.y;
+        return _.inRange(newY, gameState.ball.minusRadius(y), gameState.ball.addRadius(edgeY));
+    }
 
     var gameState = {
         width: canvas.width,

@@ -9,9 +9,9 @@
         constructor(x, y) {
             this.x = x * gameState.brickWidth;
             this.y = y * gameState.brickHeight;
-            this.edges = {
+            this.edge = {
                 x: this.x + gameState.brickWidth,
-                y: this.x + gameState.brickHeight
+                y: this.y + gameState.brickHeight
             };
             this.visible = true;
             this.colors = {
@@ -32,27 +32,18 @@
         hitSide() {
             const newX = gameState.ball.x + gameState.ball.vel.x;
             let leftOffset = gameState.ball.minusRadius(this.x);
-            let rightOffset = gameState.ball.addRadius(this.edges.x);
+            let rightOffset = gameState.ball.addRadius(this.edge.x);
             const hitLeft = _.inRange(newX, leftOffset, this.x + 1);
-            const hitRight = _.inRange(newX, this.edges.x, rightOffset + 1);
+            const hitRight = _.inRange(newX, this.edge.x, rightOffset + 1);
             return hitLeft || hitRight;
         }
 
-        hitX() {
-            const newX = gameState.ball.x + gameState.ball.vel.x;
-            return _.inRange(newX, this.x + gameState.ball.radius, this.x + gameState.brickWidth + gameState.ball.radius);
-        }
-
-        hitY() {
-            return _.inRange(gameState.ball.y, this.y - 12, this.y + gameState.brickHeight + gameState.ball.radius + 4);
-        }
-
         isHit() {
-            return this.hitX() && this.hitY();
+            return hitX(this.x, this.edge.x) && hitY(this.y, this.edge.y);
         }
 
         isSideHit() {
-            return this.hitSide() && this.hitY();
+            return this.hitSide() && hitY(this.y, this.edge.y);
         }
         setStyles() {
             ctx.strokeStyle = this.colors.stroke;
@@ -180,6 +171,16 @@
             var hitY = _.inRange(gameState.ball.addRadius(gameState.ball.y), this.y, this.y + this.height + 1);
             return hitY && hitX;
         }
+    }
+
+    function hitX(x, edgeX) {
+        const newX = gameState.ball.x + gameState.ball.vel.x;
+        return _.inRange(newX, gameState.ball.minusRadius(x), gameState.ball.addRadius(edgeX));
+    }
+
+    function hitY(y, edgeY) {
+        const newY = gameState.ball.y + gameState.ball.vel.y;
+        return _.inRange(newY, gameState.ball.minusRadius(y), gameState.ball.addRadius(edgeY));
     }
 
     var gameState = {
